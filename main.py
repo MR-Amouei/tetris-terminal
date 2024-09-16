@@ -60,6 +60,13 @@ def draw_grid(window, grid):
             if block is not None:
                 window.addstr(row_idx, col_idx * 2, '[]', block)
 
+def clear_full_lines(grid):
+    new_grid = [row for row in grid if any(block is None for block in row)]
+    full_lines = len(grid) - len(new_grid)
+    for _ in range(full_lines):
+        new_grid.insert(0, [None for _ in range(len(grid[0]))])
+    return new_grid, full_lines
+
 def main(stdscr):
     curses.curs_set(0)
     stdscr.nodelay(True)  
@@ -130,6 +137,7 @@ def main(stdscr):
                 top += 1
             else:
                 lock_shape_in_grid(current_shape, top, left, grid, current_color)
+                grid, cleared_lines = clear_full_lines(grid)
                 shape_type = random.choice(list(shapes.keys()))
                 current_shape = shapes[shape_type]
                 current_color = curses.color_pair(shape_colors[shape_type])
