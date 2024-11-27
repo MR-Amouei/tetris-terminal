@@ -2,6 +2,8 @@ import curses
 from curses import wrapper
 import random
 import time
+import pygame
+import threading
 
 shapes = {
     "I": [[1, 1, 1, 1]],
@@ -22,6 +24,8 @@ shape_colors = {
     "S": 6,
     "Z": 7 
 }
+
+music_path = r"C:\Users\MohammadReza\Downloads\Original Tetris Theme (Tetris Soundtrack) Gameboy.mp3"
 
 def rotate_shape(shape):
     return [list(reversed(col)) for col in zip(*shape)]
@@ -73,7 +77,13 @@ def game_over(stdscr, score):
     game_over_message = f"Game Over! Your score: {score}"
     stdscr.addstr(height // 2, (width // 2) - len(game_over_message) // 2, game_over_message, curses.color_pair(4))
     stdscr.refresh()
-    time.sleep(3)
+    time.sleep(3)   
+    
+def play_music(music):
+    pygame.mixer.init()
+    pygame.mixer.music.load(music)
+    pygame.mixer.music.play(-1)
+
 
 def main(stdscr):
     curses.curs_set(0)
@@ -160,5 +170,4 @@ def main(stdscr):
                     break
             last_fall_time = current_time
             
-
-wrapper(main)
+wrapper(lambda stdscr: threading.Thread(target=play_music, args=(music_path,)).start() or main(stdscr))
