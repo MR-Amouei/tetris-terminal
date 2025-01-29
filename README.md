@@ -5,6 +5,7 @@ This is a simple Tetris game implemented in Python using the `curses` library. T
 ## Requirements
 - Python 3
 - `curses` module (pre-installed in most Unix-based systems like Linux and macOS)
+- `pygame`
 
 ## Installation
 1. Clone the repository:
