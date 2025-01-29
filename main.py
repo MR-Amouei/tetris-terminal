@@ -25,7 +25,7 @@ shape_colors = {
     "Z": 7 
 }
 
-music_path = r"C:\Users\MohammadReza\Downloads\Original Tetris Theme (Tetris Soundtrack) Gameboy.mp3"
+music_path = r"MUSIC_PATH"
 
 def rotate_shape(shape):
     return [list(reversed(col)) for col in zip(*shape)]
